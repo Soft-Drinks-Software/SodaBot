@@ -18,14 +18,19 @@ app.listen(3000, () => {
 const Discord = require("discord.js");
 const token = process.env.TOKEN;
 
+let toecho;
+let saidp;
+
+let errorsc = [];
+let echobl = ["603635602809946113"];
+
 const https = require("https");
 
 const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"]
 });
 let prefix = "^";
-//can be changed manually with this command:
-// ^eval prefix = "prfx"
+let evalauth = ["493131233514225674"];
 
 const readyembed = new Discord.MessageEmbed()
   .setTitle("Started!")
@@ -43,7 +48,7 @@ client.on("ready", () => {
 });
 
 client.on("interactionCreate", async interaction => {
-  //.
+  //'
 });
 
 client.on("messageCreate", message => {
@@ -134,9 +139,57 @@ client.on("messageCreate", message => {
           .setColor("#ff0000")
           .setTimestamp();
       }
+    } else if (command == "evalraw") {
+      message.react("<a:emoji_2:871428955008290876>");
+      if (evalauth.includes(message.author.id)) {
+        var result = message.content
+          .split(" ")
+          .slice(1)
+          .join(" ");
+        try {
+          message.reactions.removeAll();
+          let evaled = eval(result);
+          message.react("<a:check:871428234976301168>");
+        } catch (err) {
+          message.reactions.removeAll();
+          if (!result.length > 950) {
+            let errorEmbed = new Discord.MessageEmbed()
+              .setTitle("Could not eval that!")
+              .setDescription(
+                "You put:\n```js\n" +
+                  result +
+                  "```\nAnd here's the error:\n```" +
+                  err.message +
+                  "```"
+              )
+              .setColor("#ff0000")
+              .setTimestamp();
+          } else {
+            let errorEmbed = new Discord.MessageEmbed()
+              .setTitle("Could not eval that!")
+              .setDescription("Here's the error:\n```" + err.message + "```")
+              .setColor("#ff0000")
+              .setTimestamp();
+          }
+          message.reply({ embeds: [errorEmbed] });
+          message.react(":x:");
+        }
+      } else {
+        message.reactions.removeAll();
+        let errorUEmbed = new Discord.MessageEmbed()
+          .setTitle("Could not eval that!")
+          .setDescription(
+            "You put:\n```js\n" +
+              result +
+              "```\nAnd here's the error:\n```" +
+              "'message.author' does not match condition" +
+              "```"
+          );
+        message.reply({ embeds: [errorUEmbed] });
+        message.react(":x:");
+      }
     } else if (command == "echo") {
-      if (message.author != "603635602809946113") //specified user with matching id blacklisted from using command due to abuse {
-        let toecho;
+      if (message.author != "603635602809946113") {
         if (
           message.content.includes("@everyone") ||
           message.content.includes("@here")
@@ -151,6 +204,7 @@ client.on("messageCreate", message => {
           } else {
             toecho = message.content.slice(5, message.content.length);
           }
+          saidp = message.author;
           message.channel.send(toecho);
         }
       }
@@ -175,6 +229,15 @@ client.on("messageCreate", message => {
         message.react("<a:check:871428234976301168>");
         message.reply({ embeds: [ping] });
       }, 1000);
+    } else if (command == "saidby") {
+      let saidby = new Discord.MessageEmbed()
+        .setTitle("The last echo message was...")
+        .setDescription(
+          "```\n" + toecho + "\n```\nSaid by:\n```\n" + saidp + "\n```"
+        )
+        .setColor("#00ff00")
+        .setTimestamp();
+      message.channel.send({ embeds: [saidby] });
     } else {
       let noc = new Discord.MessageEmbed()
         .setTitle("That command does not exist!")
@@ -192,4 +255,3 @@ client.on("messageCreate", message => {
   }
 });
 client.login(token);
-
