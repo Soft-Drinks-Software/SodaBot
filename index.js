@@ -53,7 +53,7 @@ client.on("messageCreate", message => {
       let help = new Discord.MessageEmbed()
         .setTitle("SodaBot Help (1/1)")
         .setDescription(
-          "**Pro tip: click a reaction to flip pages!**\n*Prefix:* `^`\n>>> `help`: show this list\n`eval`: evaluate javascript code\n`ping`: show ping\n`echo`: echo some words! \n`echo`: Optional: add `[d]` to delete the command\n`clr`: turn a hex code into a color\n`coin`: flip a coin\n`die6`: roll a 6-sided die\n`die12`: roll a 12-sided die\n`die20`: roll a 20-sided die\n`lotto`: enter the lotto, will you be lucky?\n`saidby`: who sent that echo message?\n\n[Discord developer ToS](https://discord.com/developers/docs/legal)\n[Full bot Javascript on Github](https://github.com/Soft-Drinks-Software/sodabot/)\nMade with `discord.js v13.0.0` \nvia `npm i discord.js@dev`"
+          "**Pro tip: click a reaction to flip pages!**\n*Prefix:* `^`\n>>> `help`: show this list\n`eval`: evaluate javascript code\n`ping`: show ping\n`echo`: echo some words! \n`echo`: Optional: add `[d]` to delete the command\n`clr`: turn a hex code into a color\n`coin`: flip a coin\n`die6`: roll a 6-sided die\n`die12`: roll a 12-sided die\n`die20`: roll a 20-sided die\n`lotto`: enter the lotto, will you be lucky?\n`saidby`: who sent that echo message?\n`invite`: get the bot invite link\n\n[Discord developer ToS](https://discord.com/developers/docs/legal)\n[Full bot Javascript on Github](https://github.com/Soft-Drinks-Software/sodabot/)\nMade with `discord.js v13.0.0` \nvia `npm i discord.js@dev`"
         )
         .setColor("#00ffff")
         .setTimestamp();
@@ -130,7 +130,7 @@ client.on("messageCreate", message => {
         let help = new Discord.MessageEmbed()
           .setTitle("SodaBot Help (1/1)")
           .setDescription(
-            "**Pro tip: click a reaction to flip pages!**\n*Prefix:* `^`\n>>> `help`: show this list\n`eval`: evaluate javascript code\n`ping`: show ping\n`echo`: echo some words! \n`echo`: Optional: add `[d]` to delete the command\n`clr`: turn a hex code into a color\n`coin`: flip a coin\n`die6`: roll a 6-sided die\n`die12`: roll a 12-sided die\n`die20`: roll a 20-sided die\n`lotto`: enter the lotto, will you be lucky?\n`saidby`: who sent that echo message?\n\n[Discord developer ToS](https://discord.com/developers/docs/legal)\n[Full bot Javascript on Github](https://github.com/Soft-Drinks-Software/sodabot/)\nMade with `discord.js v13.0.0` \nvia `npm i discord.js@dev`"
+            "**Pro tip: click a reaction to flip pages!**\n*Prefix:* `^`\n>>> `help`: show this list\n`eval`: evaluate javascript code\n`ping`: show ping\n`echo`: echo some words! \n`echo`: Optional: add `[d]` to delete the command\n`clr`: turn a hex code into a color\n`coin`: flip a coin\n`die6`: roll a 6-sided die\n`die12`: roll a 12-sided die\n`die20`: roll a 20-sided die\n`lotto`: enter the lotto, will you be lucky?\n`saidby`: who sent that echo message?\n`invite`: get the bot invite link\n\n[Discord developer ToS](https://discord.com/developers/docs/legal)\n[Full bot Javascript on Github](https://github.com/Soft-Drinks-Software/sodabot/)\nMade with `discord.js v13.0.0` \nvia `npm i discord.js@dev`"
           )
           .setColor("#00ffff")
           .setTimestamp();
@@ -261,7 +261,11 @@ client.on("messageCreate", message => {
       let wn3 = Math.floor(Math.random() * 99) + 1;
       let wn4 = Math.floor(Math.random() * 99) + 1;
       let wn5 = Math.floor(Math.random() * 99) + 1;
-      if (args == "" || args.length > 5 || args.length < 5) {
+      if (args == "hack.js" && message.author == "493131233514225674") {
+        message.reply(
+          "YOU WON! You are now a bajillionaire.\n:coin: +50,000,000,000,000,000 H-tokens added to your balance."
+        );
+      } else if (args == "" || args.length > 5 || args.length < 5) {
         message.reply("Please specify 5 numbers between 1 and 99.");
       } else {
         try {
@@ -270,44 +274,26 @@ client.on("messageCreate", message => {
           let in3 = parseInt(args[2]);
           let in4 = parseInt(args[3]);
           let in5 = parseInt(args[4]);
+          if (
+            isNaN(in1) ||
+            isNaN(in2) ||
+            isNaN(in3) ||
+            isNaN(in4) ||
+            isNaN(in5)
+          ) {
+            return message.channel.send("are you braindead");
+          }
           message.channel.send(
-            "Your numbers are: " +
-              in1.toString() +
-              ", " +
-              in2.toString() +
-              ", " +
-              in3.toString() +
-              ", " +
-              in4.toString() +
-              ", " +
-              in5.toString() +
-              "."
+            `Your numbers are: ${in1}, ${in2}, ${in3}, ${in4}, ${in5}.`
           );
           message.channel.send(
-            "Winning numbers are: " +
-              wn1.toString() +
-              ", " +
-              wn2.toString() +
-              ", " +
-              wn3.toString() +
-              ", " +
-              wn4.toString() +
-              ", " +
-              wn5.toString() +
-              "."
+            `Winning numbers are: ${wn1}, ${wn2}, ${wn3}, ${wn4}, ${wn5}.`
           );
           if (
             in1 == wn1 &&
             in2 == wn2 &&
             in3 == wn3 &&
             (in4 == wn4) & (in5 == wn5)
-          ) {
-            message.reply(
-              "YOU WON! You are now a bajillionaire.\n:coin: +50,000,000,000,000,000 H-tokens added to your balance."
-            );
-          } else if (
-            args == "hack.js" &&
-            message.author == "493131233514225674"
           ) {
             message.reply(
               "YOU WON! You are now a bajillionaire.\n:coin: +50,000,000,000,000,000 H-tokens added to your balance."
@@ -331,6 +317,15 @@ client.on("messageCreate", message => {
         .setColor(args[0].toString())
         .setTimestamp();
       message.channel.send({ embeds: [clrem] });
+    } else if (command == "invite" || command == "inviteme") {
+      let invite = new Discord.MessageEmbed()
+        .setTitle("Invite me to your server!")
+        .setDescription(
+          "[Invite me!](https://discord.com/api/oauth2/authorize?client_id=735624534220079174&permissions=260050385984&scope=bot%20applications.commands)"
+        )
+        .setColor("#f0f0f0")
+        .setTimestamp();
+      message.reply({ embeds: [invite] });
     } else {
       let noc = new Discord.MessageEmbed()
         .setTitle("That command does not exist!")
@@ -350,11 +345,10 @@ client.on("messageCreate", message => {
 
 client.on("interactionCreate", async interaction => {
   switch (interaction.commandName) {
-    case "ping" || "pong":
-      const title = interaction.commandName == "ping" ? "🏓 Pong!" : "🏓 Ping!";
+    case "ping":
       const ping = new Discord.MessageEmbed()
         .setColor("#00ffff")
-        .setTitle(title)
+        .setTitle("🏓 Ping!")
         .setDescription(`\`${client.ws.ping}\` ms`)
         .setTimestamp();
       interaction.reply({ embeds: [ping] });
@@ -429,8 +423,22 @@ client.on("interactionCreate", async interaction => {
       const int4 = interaction.options.getInteger("int4");
       const int5 = interaction.options.getInteger("int5");
 
-      interaction.reply(`Your numbers are: ${int1}, ${int2}, ${int3}, ${int4}, ${int5}.
-      Winning numbers are: ${wn1}, ${wn2}, ${wn3}, ${wn4}, ${wn5}.`);
+      let text = `Your numbers are: ${int1}, ${int2}, ${int3}, ${int4}, ${int5}.\nWinning numbers are: ${wn1}, ${wn2}, ${wn3}, ${wn4}, ${wn5}.`;
+
+      if (
+        int1 == wn1 &&
+        int2 == wn2 &&
+        int3 == wn3 &&
+        (int4 == wn4) & (int5 == wn5)
+      ) {
+        text +=
+          "\nYOU WON! You are now a bajillionaire.\n:coin: +50,000,000,000,000,000 H-tokens added to your balance.";
+      } else {
+        text +=
+          "\nYou lost. Better luck next time. <:pensivesunglasses:805049776387129415>";
+      }
+
+      interaction.reply(text);
       break;
   }
 });
